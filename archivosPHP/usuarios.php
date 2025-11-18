@@ -98,7 +98,7 @@ $resultado_lista = $conn->query($sql_select);
       <div class="nav__wrap">
         <!-- Desde /archivosPHP/ para ir a /archivosHTML/ usa ../ -->
         <a class="pill" href="../index.html"><span class="ico">🏠</span> HOME</a>
-        <a class="pill" href="../archivosHTML/productos.html"><span class="ico">📦</span> PRODUCTOS</a>
+        <a class="pill" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
         <a class="pill" href="../archivosHTML/menu.html"><span class="ico">🍽️</span> MENÚ</a>
         <a class="pill" href="../archivosHTML/pedidos.html"><span class="ico">🧾</span> PEDIDOS</a>
         <!-- Esta página -->

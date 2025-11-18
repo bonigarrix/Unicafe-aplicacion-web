@@ -1,6 +1,6 @@
 <?php
 // 1. Incluimos la conexión a la base de datos
-include 'conexion.php';
+include '../archivosPHP/conexion.php';
 
 // 2. Preparamos la consulta SQL para obtener todos los productos
 //    USANDO LOS NOMBRES DE COLUMNA DE TU TABLA REAL
@@ -37,8 +37,8 @@ $resultado_productos = $conn->query($sql);
       <div class="nav__wrap">
         <a class="pill" href="../index.html"><span class="ico">🏠</span> HOME</a>
         <a class="pill is-active" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
-        <a class="pill" href="/archivosHTML/menu.html"><span class="ico">🍽️</span> MENÚ</a>
-        <a class="pill" href="/archivosHTML/pedidos.html"><span class="ico">🧾</span> PEDIDOS</a>
+        <a class="pill" href="../archivosHTML/menu.html"><span class="ico">🍽️</span> MENÚ</a>
+        <a class="pill" href="../archivosHTML/pedidos.html"><span class="ico">🧾</span> PEDIDOS</a>
         <a class="pill" href="/archivosPHP/usuarios.php"><span class="ico">👤</span> REGISTROS</a>
       </div>
     </nav>

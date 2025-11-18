@@ -1,8 +1,8 @@
 <?php
-//$host = "localhost";
-//$usuario = "root";
-//$psw = "";
-//$bd = "unicafe";
+/*$host = "localhost";
+$usuario = "root";
+$psw = "";
+$bd = "unicafe";*/
 
 
 
