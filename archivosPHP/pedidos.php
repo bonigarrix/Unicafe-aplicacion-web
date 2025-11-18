@@ -1,0 +1,88 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.html");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pedidos — Cafetería UTHH</title>
+  <link rel="stylesheet" href="/archivosCSS/pedidos.css" />
+
+</head>
+<body>
+  <div class="wrapper">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar__left">
+        <span class="avatar" aria-hidden="true">👤</span>
+        <a class="login-pill" href="/archivosHTML/login.html"><?php echo $_SESSION['usuario']; ?></a>
+      </div>
+      <h1 class="title">CAFETERIA UTHH</h1>
+      <div></div>
+    </header>
+
+    <!-- NAV -->
+  <nav class="nav">
+      <div class="nav__wrap">
+        <a class="pill" href="../index.php"><span class="ico">🏠</span> HOME</a>
+        <a class="pill" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
+        <a class="pill" href="/archivosPHP/menu.php"><span class="ico">🍽️</span> MENÚ</a>
+        <a class="pill is-active" href="/archivosPHP/pedidos.php"><span class="ico">🧾</span> PEDIDOS</a>
+        <a class="pill" href="/archivosPHP/usuarios.php"><span class="ico">👤</span>REGISTROS</a>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="content">
+      <div class="form-container">
+        <form>
+          <div class="form-row">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" />
+          </div>
+
+          <div class="form-row">
+            <label for="lista">Lista de pedido</label>
+            <textarea id="lista" name="lista"></textarea>
+          </div>
+
+          <div class="form-row">
+            <label for="hora">Hora de la entrega</label>
+            <input id="hora" name="hora" type="time" />
+          </div>
+
+          <div class="form-row">
+            <label for="cantidad">Cantidad</label>
+            <input id="cantidad" name="cantidad" type="text" />
+          </div>
+
+          <div class="form-row">
+            <label for="pago">Pago Total</label>
+            <input id="pago" name="pago" type="text" />
+          </div>
+
+          <div class="actions">
+            <button class="btn-action btn-submit" type="button">Enviar Pedido</button>
+            <button class="btn-action btn-cancel" type="reset">Cancelar</button>
+            <button class="btn-action btn-update" type="button">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
+    <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
+    <form action="#contacto.html" method="get">
+      <button type="submit" class="btn-contacto">Contáctanos</button>
+    </form>
+  </footer>
+</body>
+</html>
