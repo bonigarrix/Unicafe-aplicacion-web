@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $fila['vchPassword'])) {
             session_regenerate_id(true);
             $_SESSION['usuario'] = $fila['vchNombres'];
-            header("Location: ../index.html");
+            header("Location: ../index.php");
             exit;
         } else {
             echo "<script>alert('Contraseña incorrecta'); window.location='../archivosHTML/login.html';</script>";
