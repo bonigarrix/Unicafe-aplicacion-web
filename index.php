@@ -34,7 +34,9 @@ if (!isset($_SESSION['usuario'])) {
         <a class="pill" href="archivosPHP/productos.php">PRODUCTOS <span class="ico">📦</span></a>
         <a class="pill" href="archivosPHP/menu.php">MENÚ <span class="ico">🍽️</span></a>
         <a class="pill" href="archivosPHP/pedidos.php">PEDIDOS <span class="ico">🧾</span></a>
+        <?php if(isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1){ ?>
         <a class="pill" href="archivosPHP/usuarios.php">REGISTROS <span class="ico">👤</span></a>
+        <?php } ?>
       </div>
     </nav>
 

@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $fila['vchPassword'])) {
             session_regenerate_id(true);
             $_SESSION['usuario'] = $fila['vchNombres'];
+            $_SESSION['rol_id']  = $fila['intIdRol'];
+            $_SESSION['usuario_id'] = $fila['intIdUsuario'];
             header("Location: ../index.php");
             exit;
         } else {
