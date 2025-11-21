@@ -16,7 +16,6 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
   <div class="app">
-
     <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar__left">

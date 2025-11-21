@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($fila = $resultado->fetch_assoc()) {
         // Si el hash es sospechosamente corto, avisa (posible columna truncada)
         if (strlen($fila['vchPassword']) < 55) {
-            echo "<script>alert('Error de configuración: la columna vchPassword es muy corta. Cámbiala a VARCHAR(255) y vuelve a registrar la contraseña.'); window.location='../login.html';</script>";
+            echo "<script>alert('Tu contraseña es muy corta, porfavor introduce una con un mayor numero de caracteres.'); window.location='../login.html';</script>";
             exit;
         }
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['usuario'] = $fila['vchNombres'];
             $_SESSION['rol_id']  = $fila['intIdRol'];
             $_SESSION['usuario_id'] = $fila['intIdUsuario'];
-            header("Location: ../index.php");
+            header("Location: ../archivosPHP/index.php");
             exit;
         } else {
             echo "<script>alert('Contraseña incorrecta'); window.location='../archivosHTML/login.html';</script>";
