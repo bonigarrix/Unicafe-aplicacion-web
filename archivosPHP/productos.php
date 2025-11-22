@@ -1,10 +1,8 @@
 <?php
 // 1. Incluimos la conexión a la base de datos
-// Estamos en archivosHTML, así que subimos un nivel y entramos a archivosPHP
 include '../archivosPHP/conexion.php';
 
 // 2. Preparamos la consulta SQL
-// IMPORTANTE: Agregamos 'vchImagen' a la selección
 $sql = "SELECT vchNombre, vchDescripcion, intStock, decPrecioVenta, vchImagen 
         FROM tblproductos";
 
@@ -18,9 +16,13 @@ $resultado_productos = $conn->query($sql);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Productos – Cafetería UTHH</title>
+  
+  <!-- Estilos Generales -->
   <link rel="stylesheet" href="../archivosCSS/productos.css" />
   <link rel="stylesheet" href="../archivosCSS/footer.css" />
   
+  <!-- Estilos de la Ventana Emergente (Nuevo archivo) -->
+  <link rel="stylesheet" href="../archivosCSS/ventanaEmergente.css" />
 </head>
 
 <body>
@@ -40,10 +42,9 @@ $resultado_productos = $conn->query($sql);
     <nav class="nav">
       <div class="nav__wrap">
         <a class="pill" href="../index.html"><span class="ico">🏠</span> HOME</a>
-        <a class="pill is-active" href="/archivosHTML/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
-        <a class="pill" href="/archivosHTML/menu.html"><span class="ico">🍽️</span> MENÚ</a>
-        <a class="pill" href="/archivosHTML/pedidos.html"><span class="ico">🧾</span> PEDIDOS</a>
-        <a class="pill" href="/archivosPHP/usuarios.php"><span class="ico">👤</span> REGISTROS</a>
+        <a class="pill is-active" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
+        <a class="pill" href="../archivosHTML/menu.html"><span class="ico">🍽️</span> MENÚ</a>
+        <a class="pill" href="../archivosHTML/pedidos.html"><span class="ico">🧾</span> PEDIDOS</a>
       </div>
     </nav>
 
@@ -63,24 +64,17 @@ $resultado_productos = $conn->query($sql);
             $precio = $fila['decPrecioVenta'];
             $stock = $fila['intStock'];
 
-            // ==========================================================
-            // LÓGICA DE IMAGEN REAL vs PLACEHOLDER
-            // ==========================================================
-            $imgDb = $fila['vchImagen']; // Ruta guardada en BD (ej: imagenes_productos/foto.jpg)
-            
-            // Verificamos si hay algo guardado Y si el archivo realmente existe
-            // Usamos "../" porque estamos en la carpeta archivosHTML y la carpeta imagenes_productos está fuera
+            // Lógica de imagen
+            $imgDb = $fila['vchImagen']; 
             if (!empty($imgDb) && file_exists("../" . $imgDb)) {
-                $imgUrl = "../" . $imgDb; // Usar imagen real
+                $imgUrl = "../" . $imgDb; 
             } else {
-                // Usar placeholder si no hay imagen
                 $imgUrl = "https://placehold.co/600x400/d9cfa8/765433?text=" . urlencode($fila['vchNombre']);
             }
         ?>
 
             <!-- PRODUCTO INDIVIDUAL -->
             <article class="product">
-              <!-- AL HACER CLIC EN LA IMAGEN: Pasamos la $imgUrl correcta -->
               <div class="product__img" onclick="abrirModal('<?php echo $nombre; ?>', '<?php echo $desc; ?>', '<?php echo $precio; ?>', '<?php echo $stock; ?>', '<?php echo $imgUrl; ?>')">
                 <img src="<?php echo $imgUrl; ?>" alt="<?php echo htmlspecialchars($fila['vchNombre']); ?>">
               </div>
@@ -111,54 +105,45 @@ $resultado_productos = $conn->query($sql);
     </form>
   </footer>
 
-  <!-- ESTRUCTURA DE LA VENTANA MODAL -->
+  <!-- ESTRUCTURA DE LA VENTANA MODAL (Oculta por defecto) -->
   <div id="productModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="cerrarModal()">&times;</span>
 
       <div class="modal-body">
-        <!-- Lado Izquierdo: Imagen Grande -->
+        <!-- Imagen Grande -->
         <div class="modal-img-container">
           <img id="modalImg" src="" alt="Producto">
         </div>
 
-        <!-- Lado Derecho: Información -->
+        <!-- Información -->
         <div class="modal-info">
           <h2 id="modalTitle" class="modal-title">Nombre del Producto</h2>
           <p id="modalStock" class="modal-stock">Stock disponible: 0</p>
           <p id="modalDesc" class="modal-desc">Descripción detallada del producto.</p>
           <div id="modalPrice" class="modal-price">$0.00</div>
-
-          <button class="btn-contacto" style="width: 100%; margin-top: auto;">¡Pedir Ahora!</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCRIPT PARA MANEJAR LA MODAL -->
+  <!-- SCRIPT -->
   <script>
     function abrirModal(nombre, descripcion, precio, stock, imgUrl) {
       var modal = document.getElementById("productModal");
-      var mTitle = document.getElementById("modalTitle");
-      var mDesc = document.getElementById("modalDesc");
-      var mPrice = document.getElementById("modalPrice");
-      var mStock = document.getElementById("modalStock");
-      var mImg = document.getElementById("modalImg");
-
-      mTitle.innerText = nombre;
-      mDesc.innerText = descripcion;
-      mPrice.innerText = "$" + parseFloat(precio).toFixed(2) + " MXN";
-      mStock.innerText = "Disponibles: " + stock + " unidades";
-      mImg.src = imgUrl;
+      document.getElementById("modalTitle").innerText = nombre;
+      document.getElementById("modalDesc").innerText = descripcion;
+      document.getElementById("modalPrice").innerText = "$" + parseFloat(precio).toFixed(2) + " MXN";
+      document.getElementById("modalStock").innerText = "Disponibles: " + stock + " unidades";
+      document.getElementById("modalImg").src = imgUrl;
 
       modal.style.display = "block";
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"; // Bloquear scroll
     }
 
     function cerrarModal() {
-      var modal = document.getElementById("productModal");
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
+      document.getElementById("productModal").style.display = "none";
+      document.body.style.overflow = "auto"; // Reactivar scroll
     }
 
     window.onclick = function(event) {

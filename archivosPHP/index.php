@@ -16,7 +16,7 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
   <div class="app">
-     <header class="topbar">
+    <header class="topbar">
       <div class="topbar__left">
         <span class="avatar" aria-hidden="true">👤</span>
         
@@ -38,6 +38,7 @@ if (!isset($_SESSION['usuario'])) {
       <div class="nav__wrap">
         <a class="pill is-active" href="/index.php">HOME <span class="ico">🏠</span></a>
         <a class="pill" href="archivosPHP/productos.php">PRODUCTOS <span class="ico">📦</span></a>
+        <a class="pill is-active" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
         <a class="pill" href="archivosPHP/menu.php">MENÚ <span class="ico">🍽️</span></a>
         <a class="pill" href="archivosPHP/pedidos.php">PEDIDOS <span class="ico">🧾</span></a>
         <?php if(isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1){ ?>
