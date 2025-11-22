@@ -20,7 +20,7 @@ $resultado_productos = $conn->query($sql);
   <title>Productos – Cafetería UTHH</title>
   <link rel="stylesheet" href="../archivosCSS/productos.css" />
   <link rel="stylesheet" href="../archivosCSS/footer.css" />
-
+  
 </head>
 
 <body>
