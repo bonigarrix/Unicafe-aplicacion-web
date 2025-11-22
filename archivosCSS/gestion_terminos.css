@@ -1,0 +1,47 @@
+        .list-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 8px;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .user-table th,
+        .user-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .user-table th {
+            background: #f4f4f4;
+        }
+
+        .action-links a {
+            margin-right: 10px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .edit-link {
+            color: #007bff;
+        }
+
+        .delete-link {
+            color: #dc3545;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #c8c8c8;
+            border-radius: 4px;
+            min-height: 100px;
+            font-family: inherit;
+        }
