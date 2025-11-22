@@ -1,0 +1,70 @@
+/* Reutilizamos variables de tu paleta */
+:root {
+    --brown-a: #8a633b;
+    --cream: #efe3cf;
+    --text: #1f1f1f;
+    --border-teal: #2A9D8F;
+    /* El color del borde en tu boceto */
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+}
+
+.terms-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #000;
+    font-weight: 500;
+}
+
+/* Grid de dos columnas */
+.terms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Dos columnas iguales */
+    gap: 30px;
+    /* Espacio entre columnas */
+}
+
+/* Estilo de cada tarjeta */
+.term-card {
+    border: 2px solid var(--border-teal);
+    /* Borde color verde azulado */
+    background-color: #fff;
+    padding: 20px;
+    /* No ponemos border-radius porque tu boceto tiene esquinas rectas */
+    height: 100%;
+    /* Para que se estiren igual */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.term-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.term-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+    text-align: justify;
+}
+
+/* Responsivo: Una columna en celulares */
+@media (max-width: 768px) {
+    .terms-grid {
+        grid-template-columns: 1fr;
+    }
+}
