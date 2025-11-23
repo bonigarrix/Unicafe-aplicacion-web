@@ -22,3 +22,19 @@ if ($conn->connect_error) {
 
 } 
 ?>
+<?php
+// conexion.php
+$servername = "localhost";
+$username = "root";      // Usuario por defecto de XAMPP
+$password = "";          // Contraseña por defecto de XAMPP (vacía)
+$dbname = "cafeteria_uthh"; // El nombre que le pusimos a tu base de datos
+
+// Crear la conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar si hubo error
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+// echo "Conectado exitosamente"; // Descomenta esto solo para probar si funciona
+?>

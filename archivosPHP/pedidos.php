@@ -11,12 +11,12 @@ if (!isset($_SESSION['usuario'])) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pedidos — Cafetería UTHH</title>
-  <link rel="stylesheet" href="/archivosCSS/pedidos.css" />
-
+  <link rel="stylesheet" href="estilos.css" /> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="wrapper">
-    <!-- TOPBAR -->
+    
     <header class="topbar">
       <div class="topbar__left">
         <span class="avatar" aria-hidden="true">👤</span>
@@ -26,63 +26,85 @@ if (!isset($_SESSION['usuario'])) {
       <div></div>
     </header>
 
-    <!-- NAV -->
-  <nav class="nav">
+    <nav class="nav">
       <div class="nav__wrap">
         <a class="pill" href="../index.php"><span class="ico">🏠</span> HOME</a>
         <a class="pill" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
         <a class="pill" href="/archivosPHP/menu.php"><span class="ico">🍽️</span> MENÚ</a>
         <a class="pill is-active" href="/archivosPHP/pedidos.php"><span class="ico">🧾</span> PEDIDOS</a>
-        <a class="pill" href="/archivosPHP/usuarios.php"><span class="ico">👤</span>REGISTROS</a>
+        <a class="pill" href="/archivosPHP/usuarios.php"><span class="ico">👤</span> REGISTROS</a>
       </div>
     </nav>
 
-    <!-- CONTENT -->
-    <main class="content">
-      <div class="form-container">
-        <form>
-          <div class="form-row">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" type="text" />
-          </div>
+    <div class="main-container">
+        <div class="card">
+            <h2>Historial de Pedidos</h2>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th>Nombre</th>
+                            <th>Lista de Pedido</th>
+                            <th>Hora de la entrega</th>
+                            <th class="text-center">Cantidad</th>
+                            <th>Pago Total</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <?php
+                        // 1. Incluimos la conexión (Asegúrate de que conexion.php esté en la misma carpeta)
+                        include 'conexion.php'; 
 
-          <div class="form-row">
-            <label for="lista">Lista de pedido</label>
-            <textarea id="lista" name="lista"></textarea>
-          </div>
+                        // 2. Hacemos la consulta SQL
+                        $sql = "SELECT * FROM historial_pedidos";
+                        
+                        // Verificamos que la conexión exista antes de consultar
+                        if ($conn) {
+                            $result = $conn->query($sql);
 
-          <div class="form-row">
-            <label for="hora">Hora de la entrega</label>
-            <input id="hora" name="hora" type="time" />
-          </div>
+                            // 3. Verificamos si hay resultados
+                            if ($result && $result->num_rows > 0) {
+                                // 4. Recorremos cada fila y la dibujamos
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td class='text-center'>" . $row["id"] . "</td>";
+                                    echo "<td>" . $row["nombre_cliente"] . "</td>";
+                                    echo "<td>" . $row["detalle_pedido"] . "</td>";
+                                    echo "<td>" . $row["hora_entrega"] . "</td>";
+                                    echo "<td class='text-center'>" . $row["cantidad"] . "</td>";
+                                    echo "<td>$" . $row["total"] . "</td>";
+                                    echo "<td class='text-center'>";
+                                    // Enlace para eliminar
+                                    echo "<a href='eliminar_pedido.php?id=" . $row["id"] . "' class='btn-delete'>Eliminar</a>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='7' class='text-center'>No hay pedidos registrados</td></tr>";
+                            }
+                            $conn->close();
+                        } else {
+                            echo "<tr><td colspan='7' class='text-center'>Error de conexión a la base de datos</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
 
-          <div class="form-row">
-            <label for="cantidad">Cantidad</label>
-            <input id="cantidad" name="cantidad" type="text" />
-          </div>
-
-          <div class="form-row">
-            <label for="pago">Pago Total</label>
-            <input id="pago" name="pago" type="text" />
-          </div>
-
-          <div class="actions">
-            <button class="btn-action btn-submit" type="button">Enviar Pedido</button>
-            <button class="btn-action btn-cancel" type="reset">Cancelar</button>
-            <button class="btn-action btn-update" type="button">Actualizar</button>
-          </div>
-        </form>
-      </div>
-    </main>
+    <footer class="footer">
+      <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
+      <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
+      <form action="#contacto.html" method="get">
+        <button type="submit" class="btn-contacto">Contáctanos</button>
+      </form>
+    </footer>
+    
   </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
-    <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
-    <form action="#contacto.html" method="get">
-      <button type="submit" class="btn-contacto">Contáctanos</button>
-    </form>
-  </footer>
 </body>
 </html>
