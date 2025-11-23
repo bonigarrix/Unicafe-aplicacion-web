@@ -79,6 +79,7 @@ $resultado_lista = $conn->query($sql_select);
   <link rel="stylesheet" href="../archivosCSS/registro.css">
   <link rel="stylesheet" href="../archivosCSS/usuarios.css">
   <link rel="stylesheet" href="../archivosCSS/footer.css" />
+  <link rel="stylesheet" href="../archivosCSS/menu_desplegable.css" />
 </head>
 
 <body>
