@@ -49,6 +49,7 @@ if (!isset($_SESSION['usuario'])) {
         <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
           <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
           <a class="pill" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
+          <a class="pill" href="editar_aviso.php">⚙️ GESTIÓN AVISO DE PRIVACIDAD</a>
           <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
         <?php } ?>
       </div>

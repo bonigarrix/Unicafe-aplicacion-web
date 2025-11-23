@@ -35,7 +35,9 @@ $res_lista = $conn->query($sql_lista);
 <head>
     <meta charset="utf-8" />
     <title>Gestionar Términos — Cafetería UTHH</title>
-    <link rel="stylesheet" href="../archivosCSS/registro.css"> <!-- Reutilizamos estilos de admin -->
+    <link rel="stylesheet" href="../archivosCSS/registro.css">
+    <link rel="stylesheet" href="../archivosCSS/menu_desplegable.css" />
+    <!-- Reutilizamos estilos de admin -->
     <!-- <link rel="stylesheet" href="../archivosCSS/gestion_terminos.css">  <- Este no existe, usa estilos en línea o registro.css -->
     <style>
         /* Estilos específicos para esta página si no usas gestion_terminos.css */
@@ -86,12 +88,40 @@ $res_lista = $conn->query($sql_lista);
             min-height: 100px;
             font-family: inherit;
         }
+
+        /* --- Estilos para el botón de Vista Previa --- */
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            /* Separa título a la izq y botón a la der */
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .btn-preview {
+            background-color: #2A9D8F;
+            /* Tu color verde azulado característico */
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s;
+        }
+
+        .btn-preview:hover {
+            background-color: #21867a;
+            /* Un poco más oscuro al pasar el mouse */
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 
 <body>
     <div class="app">
-         <header class="topbar">
+        <header class="topbar">
             <div class="topbar__left">
                 <span class="avatar" aria-hidden="true">👤</span>
 
@@ -109,24 +139,26 @@ $res_lista = $conn->query($sql_lista);
             <div class="topbar__right"></div>
         </header>
         <nav class="nav">
-      <div class="nav__wrap">
-        <a class="pill" href="/index.php">HOME <span class="ico">🏠</span></a>
-        <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 3) { ?>
-        <a class="pill" href="productos.php">PRODUCTOS <span class="ico">📦</span></a>
-        <a class="pill" href="menu.php">MENÚ <span class="ico">🍽️</span></a>
-        <a class="pill" href="pedidos.php">PEDIDOS <span class="ico">🧾</span></a>
-        <?php } ?>
-        <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
-          <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
-          <a class="pill is-active" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
-          <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
-        <?php } ?>
-      </div>
-    </nav>
+            <div class="nav__wrap">
+                <a class="pill" href="/index.php">HOME <span class="ico">🏠</span></a>
+                <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 3) { ?>
+                    <a class="pill" href="productos.php">PRODUCTOS <span class="ico">📦</span></a>
+                    <a class="pill" href="menu.php">MENÚ <span class="ico">🍽️</span></a>
+                    <a class="pill" href="pedidos.php">PEDIDOS <span class="ico">🧾</span></a>
+                <?php } ?>
+                <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
+                    <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
+                    <a class="pill" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
+                    <a class="pill" href="editar_aviso.php">⚙️ GESTIÓN AVISO DE PRIVACIDAD</a>
+                    <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
+                <?php } ?>
+            </div>
+        </nav>
 
         <main class="content">
             <div class="form-container">
                 <h2><?php echo $modo_edicion ? 'Editar Término' : 'Agregar Nuevo Término'; ?></h2>
+
                 <form action="<?php echo $accion_form; ?>" method="post">
                     <div class="form-grid" style="grid-template-columns: 1fr;">
                         <div class="form-column">
@@ -138,10 +170,22 @@ $res_lista = $conn->query($sql_lista);
                                 <label>Descripción</label>
                                 <textarea name="descripcion" required><?php echo $desc_val; ?></textarea>
                             </div>
-                            <div class="actions" style="justify-content: flex-start;">
-                                <button class="btn-action btn-add" type="submit"><?php echo $modo_edicion ? 'Guardar Cambios' : 'Agregar'; ?></button>
-                                <?php if ($modo_edicion): ?><a href="gestion_terminos.php" class="btn-action form-cancel-btn">Cancelar</a><?php endif; ?>
+
+                            <div class="actions" style="justify-content: flex-start; gap: 10px; align-items: center;">
+
+                                <button class="btn-action btn-add" type="submit">
+                                    <?php echo $modo_edicion ? 'Guardar Cambios' : 'Agregar'; ?>
+                                </button>
+
+                                <a href="terminos.php" target="_blank" class="btn-action btn-preview">
+                                    👁️ Ver como Usuario
+                                </a>
+
+                                <?php if ($modo_edicion): ?>
+                                    <a href="gestion_terminos.php" class="btn-action form-cancel-btn">Cancelar</a>
+                                <?php endif; ?>
                             </div>
+
                         </div>
                     </div>
                 </form>

@@ -68,19 +68,40 @@ $resultado = $conn->query($sql);
     </div>
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-links" style="display:flex; justify-content:center; gap:20px; margin-bottom:10px; font-size:0.9rem;">
-            <!-- Enlace útil para llegar aquí -->
-            <a href="terminos.php" style="color:#fff; text-decoration:none;">Términos y condiciones</a>
-            <a href="#" style="color:#fff; text-decoration:none;">Somos Unicafe</a>
-            <a href="#" style="color:#fff; text-decoration:none;">Aviso de privacidad</a>
-        </div>
-        <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
-        <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
-        <form action="#contacto.html" method="get">
-            <button type="submit" class="btn-contacto">Contáctanos</button>
-        </form>
-    </footer>
+   <footer class="footer">
+    <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
+    <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
+
+    <div class="footer-links">
+      <a href="/unicafe/archivosPHP/aviso_privacidad.php">Aviso de Privacidad</a>
+      <span class="separator">|</span>
+      <a href="/archivosPHP/terminos.php">Terminos y condiciones</a>
+      <span class="separator">|</span>
+      <a href="/unicafe/archivosHTML/somosUnicafe.html">Sobre nosotros</a>
+    </div>
+  </footer>
+  <button
+    id="btn-voz"
+    class="voice-btn"
+    aria-label="Escuchar el contenido de la página">
+    🔊 Escuchar Contenido
+  </button>
+  <script src="/archivosJS/lector_voz.js"></script>
+
+  <script src="/archivosJS/accesibilidad.js"></script>
+
+  <div class="accessibility-panel">
+    <button id="btn-zoom-in" aria-label="Aumentar tamaño">A+</button>
+    <button id="btn-zoom-reset" aria-label="Restablecer tamaño">↺</button>
+    <button id="btn-zoom-out" aria-label="Disminuir tamaño">A-</button>
+
+    <button
+      id="btn-contrast"
+      aria-label="Cambiar modo de color"
+      style="margin-top: 5px; border-color: #2a9d8f; color: #2a9d8f">
+      🌗
+    </button>
+  </div>
 
 </body>
 

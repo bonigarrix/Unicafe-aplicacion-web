@@ -77,7 +77,46 @@ $res_lista = $conn->query($sql_lista);
     <link rel="stylesheet" href="../archivosCSS/menu_desplegable.css" />
     <link rel="stylesheet" href="../archivosCSS/gestion_productos.css">
     <link rel="stylesheet" href="../archivosCSS/footer.css" />
+    <style>
+        /* --- ESTILO NUEVO PARA EL BOTÓN DE VISTA PREVIA --- */
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            /* Línea separadora sutil */
+            padding-bottom: 10px;
+        }
 
+        /* Ajuste para que el título no tenga margen superior que descuadre */
+        .header-flex h2 {
+            margin: 0;
+            color: #765433;
+            /* Tu color café */
+        }
+
+        .btn-preview {
+            background-color: #2A9D8F;
+            /* Color corporativo */
+            color: white !important;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-preview:hover {
+            background-color: #21867a;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 
 <body>
@@ -110,7 +149,8 @@ $res_lista = $conn->query($sql_lista);
                 <?php } ?>
                 <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
                     <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
-                    <a class="pill is-active" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
+                    <a class="pill" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
+                    <a class="pill" href="editar_aviso.php">⚙️ GESTIÓN AVISO DE PRIVACIDAD</a>
                     <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
                 <?php } ?>
             </div>
@@ -120,8 +160,13 @@ $res_lista = $conn->query($sql_lista);
 
             <!-- FORMULARIO -->
             <div class="form-container">
-                <h2><?php echo $modo_edicion ? 'Modificar Producto' : 'Agregar Nuevo Producto'; ?></h2>
+                <div class="header-flex">
+                    <h2><?php echo $modo_edicion ? 'Modificar Producto' : 'Agregar Nuevo Producto'; ?></h2>
 
+                    <a href="productos.php" target="_blank" class="btn-preview">
+                        👁️ Ver Catálogo
+                    </a>
+                </div>
                 <!-- IMPORTANTE: enctype="multipart/form-data" es necesario para subir archivos -->
                 <form action="<?php echo $accion_form; ?>" method="post" enctype="multipart/form-data">
                     <div class="form-grid">
