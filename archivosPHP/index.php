@@ -12,7 +12,9 @@ if (!isset($_SESSION['usuario'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cafetería UTHH</title>
   <link rel="stylesheet" href="/archivosCSS/home.css" />
+  <link rel="stylesheet" href="/archivosCSS/menu_desplegable.css" />
   <link rel="stylesheet" href="/archivosCSS/footer.css" />
+  <link rel="stylesheet" href="/archivosCSS/accesibilidad.css" />
 </head>
 <body>
   <div class="app">
@@ -42,7 +44,7 @@ if (!isset($_SESSION['usuario'])) {
         <a class="pill" href="menu.php">MENÚ <span class="ico">🍽️</span></a>
         <a class="pill" href="pedidos.php">PEDIDOS <span class="ico">🧾</span></a>
         <?php if(isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1){ ?>
-        <a class="pill" href="archivosPHP/usuarios.php">REGISTROS <span class="ico">👤</span></a>
+        <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
         <?php } ?>
       </div>
     </nav>
@@ -144,11 +146,42 @@ if (!isset($_SESSION['usuario'])) {
     </main>
   </div>
   <footer class="footer">
-  <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
-  <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
-  <form action="#contacto.html" method="get">
-    <button type="submit" class="btn-contacto">Contáctanos</button>
-  </form>
-</footer>
+      <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
+      <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
+
+      <div class="footer-links">
+        <a href="/unicafe/archivosPHP/aviso_privacidad.php"
+          >Aviso de Privacidad</a
+        >
+        <span class="separator">|</span>
+        <a href="/archivosPHP/terminos.php">Terminos y condiciones</a>
+        <span class="separator">|</span>
+        <a href="/unicafe/archivosHTML/somosUnicafe.html">Sobre nosotros</a>
+      </div>
+    </footer>
+    <button
+      id="btn-voz"
+      class="voice-btn"
+      aria-label="Escuchar el contenido de la página"
+    >
+      🔊 Escuchar Contenido
+    </button>
+    <script src="/archivosJS/lector_voz.js"></script>
+
+    <script src="/archivosJS/accesibilidad.js"></script>
+
+    <div class="accessibility-panel">
+      <button id="btn-zoom-in" aria-label="Aumentar tamaño">A+</button>
+      <button id="btn-zoom-reset" aria-label="Restablecer tamaño">↺</button>
+      <button id="btn-zoom-out" aria-label="Disminuir tamaño">A-</button>
+
+      <button
+        id="btn-contrast"
+        aria-label="Cambiar modo de color"
+        style="margin-top: 5px; border-color: #2a9d8f; color: #2a9d8f"
+      >
+        🌗
+      </button>
+    </div>
 </body>
 </html>
