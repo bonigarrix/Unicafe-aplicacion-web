@@ -52,7 +52,7 @@ if (!isset($_SESSION['usuario'])) {
 
     <nav class="nav">
       <div class="nav__wrap">
-        <a class="pill" href="../index.php"><span class="ico">🏠</span> HOME</a>
+        <a class="pill" href="../archivosPHP/index.php"><span class="ico">🏠</span> HOME</a>
         <a class="pill" href="productos.php"><span class="ico">📦</span> PRODUCTOS</a>
         <a class="pill" href="menu.php"><span class="ico">🍽️</span> MENÚ</a>
         <a class="pill is-active" href="pedidos.php"><span class="ico">🧾</span> PEDIDOS</a>
