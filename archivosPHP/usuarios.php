@@ -95,7 +95,7 @@ $resultado_lista = $conn->query($sql_select);
         <!-- Desde /archivosPHP/ para ir a /archivosHTML/ usa ../ -->
         <a class="pill" href="../index.html"><span class="ico">🏠</span> HOME</a>
         <a class="pill" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
-        <a class="pill" href="../archivosHTML/menu.html"><span class="ico">🍽️</span> MENÚ</a>
+        <a class="pill" href="../archivosPHP/menu.php"><span class="ico">🍽️</span> MENÚ</a>
         <a class="pill" href="../archivosHTML/pedidos.html"><span class="ico">🧾</span> PEDIDOS</a>
         <!-- Esta página -->
         <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
