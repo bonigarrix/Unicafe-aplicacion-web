@@ -140,7 +140,7 @@ $res_lista = $conn->query($sql_lista);
         </header>
         <nav class="nav">
             <div class="nav__wrap">
-                <a class="pill" href="/index.php">HOME <span class="ico">🏠</span></a>
+                <a class="pill" href="../archivosPHP/index.php">HOME <span class="ico">🏠</span></a>
                 <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 3) { ?>
                     <a class="pill" href="productos.php">PRODUCTOS <span class="ico">📦</span></a>
                     <a class="pill" href="menu.php">MENÚ <span class="ico">🍽️</span></a>
@@ -148,7 +148,7 @@ $res_lista = $conn->query($sql_lista);
                 <?php } ?>
                 <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
                     <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
-                    <a class="pill" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
+                    <a class="pill is-active" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
                     <a class="pill" href="editar_aviso.php">⚙️ GESTIÓN AVISO DE PRIVACIDAD</a>
                     <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
                 <?php } ?>
