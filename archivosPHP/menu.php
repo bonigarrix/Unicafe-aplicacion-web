@@ -74,7 +74,20 @@ while ($row = $res->fetch_assoc()) {
     .btn-eliminar{ background:#dd5865; color:#fff; }
     
     /* Corrección imagen tarjeta */
+    .tile__img {
+        width: 80px; height: 80px; flex-shrink: 0;
+        background-color: #eee; border-radius: 5px; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+    }
     .tile__img img { width: 100%; height: 100%; object-fit: cover; }
+    
+    /* Estilo para cuando no hay imagen (placeholder SVG) */
+    .no-image-placeholder {
+        width: 100%; height: 100%;
+        background-color: #efe3cf; color: #8a633b;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: bold; font-size: 20px; text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -143,7 +156,6 @@ while ($row = $res->fetch_assoc()) {
         <?php if(!empty($platilloEditar['vchImagen'])): ?>
             <div class="img-preview-box">
                 <p style="margin:0; font-size:12px; color:#666;">Imagen Actual:</p>
-                <!-- Aquí también agregamos el ../ -->
                 <img src="../<?php echo htmlspecialchars($platilloEditar['vchImagen']); ?>" alt="Actual">
             </div>
         <?php endif; ?>
@@ -162,32 +174,43 @@ while ($row = $res->fetch_assoc()) {
             <?php foreach ($items as $p): ?>
                 <?php 
                     // ============================================================
-                    // CORRECCIÓN DE RUTA DE IMAGEN
+                    // CORRECCIÓN DE RUTA DE IMAGEN + FALLBACK
                     // ============================================================
                     $imgDb = $p['vchImagen'];
-                    
-                    // 1. Construir la ruta física RELATIVA AL SERVIDOR para checar si existe
-                    //    menu.php está en archivosPHP/, así que salimos con ../
                     $rutaFisica = "../" . $imgDb;
-
-                    // 2. Verificar
+                    
+                    // Determinamos si mostrar la imagen o el placeholder
+                    // Usamos una imagen por defecto transparente para activar el 'onerror' si falla
+                    $mostrarImagen = false;
                     if (!empty($imgDb) && file_exists($rutaFisica)) {
-                        // Si existe, usamos la ruta con ../ para que el HTML la encuentre
+                        $mostrarImagen = true;
                         $imgSrc = $rutaFisica;
-                    } else {
-                        // Si no, placeholder
-                        $imgSrc = "https://placehold.co/300x200/efe3cf/8a633b?text=" . urlencode($p['vchNombre']);
                     }
                 ?>
               <article class="tile">
                 <div class="tile-row">
                   <div class="tile__img">
-                    <img src="<?php echo $imgSrc; ?>" alt="<?php echo htmlspecialchars($p['vchNombre']); ?>">
+                    <?php if ($mostrarImagen): ?>
+                        <!-- Si falla la carga (onerror), se oculta la imagen y se muestra el div de fondo -->
+                        <img src="<?php echo $imgSrc; ?>" alt="<?php echo htmlspecialchars($p['vchNombre']); ?>" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback oculto por defecto -->
+                        <div class="no-image-placeholder" style="display:none;">
+                            <?php echo strtoupper(substr($p['vchNombre'], 0, 1)); ?>
+                        </div>
+                    <?php else: ?>
+                        <!-- Si no hay imagen en BD, mostramos inicial del nombre -->
+                        <div class="no-image-placeholder">
+                            <?php echo strtoupper(substr($p['vchNombre'], 0, 1)); ?>
+                        </div>
+                    <?php endif; ?>
                   </div>
+                  
                   <div class="tile__info">
                     <strong><?php echo htmlspecialchars($p['vchNombre']); ?></strong>
                     <span class="price">$<?php echo number_format($p['decPrecio'], 2); ?></span>
                   </div>
+                  
                   <div class="tile__actions">
                     <a class="btn-crud btn-editar" href="menu.php?modo=editar&id=<?php echo $p['intIdPlatillo']; ?>">Editar</a>
                     <form action="menu_acciones.php?accion=eliminar&id=<?php echo $p['intIdPlatillo']; ?>" method="post" onsubmit="return confirm('¿Eliminar este platillo?');">
