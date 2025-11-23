@@ -11,74 +11,38 @@ if (!isset($_SESSION['usuario'])) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Menú – Cafetería UTHH</title>
-  <link rel="stylesheet" href="../archivosCSS/menu.css" />
-  <link rel="stylesheet" href="../archivosCSS/footer.css" />
-
-  <style>
-    /* Formularios CRUD */
-    .form-crud {
-      max-width: 600px; margin: 15px auto; padding: 15px;
-      background: #fdf5e6; border-radius: 10px; border: 1px solid #d0b38a;
-    }
-    .form-crud h2 { margin-top: 0; text-align: center; }
-    .form-crud label { display: block; margin-top: 6px; font-size: 14px; font-weight: bold; }
-    .form-crud input[type="text"], .form-crud input[type="number"] {
-      width: 100%; padding: 8px; margin-top: 2px; border-radius: 5px; border: 1px solid #ccc;
-    }
-    .form-crud button, .form-crud .btn-cancelar {
-      margin-top: 15px; padding: 8px 15px; border-radius: 5px; border: none; cursor: pointer; font-weight: 600;
-    }
-    .form-crud button { background: #28a745; color: #fff; }
-    .form-crud .btn-cancelar { background: #6c757d; color: #fff; text-decoration: none; display: inline-block; }
-
-    /* Estilos para previsualización de imagen */
-    .img-preview-box {
-        margin-top: 10px; text-align: center; background: #fff; padding: 10px; border: 1px dashed #ccc;
-    }
-    .img-preview-box img { max-height: 150px; object-fit: contain; }
-
-    /* Botones de cada platillo */
-    .tile-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .tile__actions{ display:flex; flex-direction:column; gap:4px; }
-    .btn-crud{ border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer; }
-    .btn-editar{ background:#699dd4; color:#fff; text-decoration:none; text-align:center; }
-    .btn-eliminar{ background:#dd5865; color:#fff; }
-    
-    /* Corrección imagen tarjeta */
-    .tile__img {
-        width: 80px; height: 80px; flex-shrink: 0;
-        background-color: #eee; border-radius: 5px; overflow: hidden;
-        display: flex; align-items: center; justify-content: center;
-    }
-    .tile__img img { width: 100%; height: 100%; object-fit: cover; }
-    
-    /* Estilo para cuando no hay imagen (placeholder SVG) */
-    .no-image-placeholder {
-        width: 100%; height: 100%;
-        background-color: #efe3cf; color: #8a633b;
-        display: flex; align-items: center; justify-content: center;
-        font-weight: bold; font-size: 20px; text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="/archivosCSS/home.css" />
+  <link rel="stylesheet" href="/archivosCSS/menu_desplegable.css" />
+  <link rel="stylesheet" href="/archivosCSS/footer.css" />
+  <link rel="stylesheet" href="/archivosCSS/accesibilidad.css" />
 </head>
 <body>
   <div class="app">
 
     <header class="topbar">
       <div class="topbar__left">
-        <span class="avatar">👤</span>
-        <a class="login-pill" href="/archivosHTML/login.html">Iniciar Sesión</a>
-      </div>
+        <span class="avatar" aria-hidden="true">👤</span>
+        
+        <div class="user-dropdown">
+            <span class="user-trigger">
+                Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?> <span style="font-size:0.8em">▼</span>
+            </span>
+            <div class="dropdown-content">
+                <a href="mi_cuenta.php">⚙️ Mi Cuenta</a>
+                <a href="logout.php" class="logout-link">🚪 Cerrar Sesión</a>
+            </div>
+        </div>
+        </div>
       <h1 class="title">CAFETERIA UTHH</h1>
     </header>
-
+    <!-- NAV -->
     <nav class="nav">
       <div class="nav__wrap">
-        <a class="pill" href="../index.html">🏠 HOME</a>
-        <a class="pill" href="productos.php">📦 PRODUCTOS</a>
-        <a class="pill is-active" href="menu.php">🍽️ MENÚ</a>
-        <a class="pill" href="pedidos.php">🧾 PEDIDOS</a>
-        <a class="pill" href="usuarios.php">👤 REGISTROS</a>
+        <a class="pill" href="/archivosPHP/index.php"><span class="ico">🏠</span> HOME</a>
+        <a class="pill" href="/archivosPHP/productos.php"><span class="ico">📦</span> PRODUCTOS</a>
+        <a class="pill is-active" href="/archivosPHP/menu.php"><span class="ico">🍽️</span> MENÚ</a>
+        <a class="pill" href="/archivosPHP/pedidos.php"><span class="ico">🧾</span> PEDIDOS</a>
+        <a class="pill" href="/archivosPHP/usuarios.php"><span class="ico">👤</span>REGISTROS</a>
       </div>
     </nav>
 
@@ -198,11 +162,43 @@ if (!isset($_SESSION['usuario'])) {
     </main>
   </div>
   <footer class="footer">
-  <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
-  <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
-  <form action="#contacto.html" method="get">
-    <button type="submit" class="btn-contacto">Contáctanos</button>
-  </form>
+      <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
+      <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
+
+      <div class="footer-links">
+        <a href="/unicafe/archivosPHP/aviso_privacidad.php"
+          >Aviso de Privacidad</a
+        >
+        <span class="separator">|</span>
+        <a href="/archivosPHP/terminos.php">Terminos y condiciones</a>
+        <span class="separator">|</span>
+        <a href="/unicafe/archivosHTML/somosUnicafe.html">Sobre nosotros</a>
+      </div>
+    </footer>
+    <button
+      id="btn-voz"
+      class="voice-btn"
+      aria-label="Escuchar el contenido de la página"
+    >
+      🔊 Escuchar Contenido
+    </button>
+    <script src="/archivosJS/lector_voz.js"></script>
+
+    <script src="/archivosJS/accesibilidad.js"></script>
+
+    <div class="accessibility-panel">
+      <button id="btn-zoom-in" aria-label="Aumentar tamaño">A+</button>
+      <button id="btn-zoom-reset" aria-label="Restablecer tamaño">↺</button>
+      <button id="btn-zoom-out" aria-label="Disminuir tamaño">A-</button>
+
+      <button
+        id="btn-contrast"
+        aria-label="Cambiar modo de color"
+        style="margin-top: 5px; border-color: #2a9d8f; color: #2a9d8f"
+      >
+        🌗
+      </button>
+    </div>
 </footer>
 </body>
 </html>
