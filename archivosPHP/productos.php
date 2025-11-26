@@ -1,13 +1,17 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-  header("Location: login.html");
-  exit;
-}
-require_once __DIR__ . '/conexion.php'; 
-// 2. Preparamos la consulta SQL
+session_start(); // Iniciamos sesión para comprobar si existe, pero NO forzamos a salir
+
+// 1. DETECTAR ESTADO DEL USUARIO
+$usuario_logueado = isset($_SESSION['usuario']);
+$nombre_usuario = $usuario_logueado ? $_SESSION['usuario'] : '';
+
+// 2. CONEXIÓN A BD
+require_once __DIR__ . '/conexion.php';
+
+// 3. CONSULTA DE PRODUCTOS
 $sql = "SELECT vchNombre, vchDescripcion, intStock, decPrecioVenta, vchImagen 
-        FROM tblproductos";
+        FROM tblproductos 
+        WHERE intStock > 0"; // Opcional: Solo mostrar lo que tiene stock
 
 $resultado_productos = $conn->query($sql);
 ?>
@@ -20,64 +24,30 @@ $resultado_productos = $conn->query($sql);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Productos – Cafetería UTHH</title>
 
-  <!-- Estilos Generales -->
-  <link rel="stylesheet" href="/archivosCSS/home.css" />
-  <link rel="stylesheet" href="/archivosCSS/productos.css" />
-  <link rel="stylesheet" href="/archivosCSS/menu_desplegable.css" />
-  <link rel="stylesheet" href="/archivosCSS/footer.css" />
-  <link rel="stylesheet" href="/archivosCSS/accesibilidad.css" />
-  
-  <!-- Estilos de la Ventana Emergente (Nuevo archivo) -->
+  <link rel="stylesheet" href="../archivosCSS/layout.css?v=999.1" />
+  <link rel="stylesheet" href="../archivosCSS/productos.css?v=999.1" />
+
+
   <link rel="stylesheet" href="../archivosCSS/ventanaEmergente.css" />
 </head>
 
 <body>
   <div class="app">
 
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div class="topbar__left">
-        <span class="avatar" aria-hidden="true">👤</span>
+    <?php include 'header.php'; ?>
 
-        <div class="user-dropdown">
-          <span class="user-trigger">
-            Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?> <span style="font-size:0.8em">▼</span>
-          </span>
-          <div class="dropdown-content">
-            <a href="mi_cuenta.php">⚙️ Mi Cuenta</a>
-            <a href="logout.php" class="logout-link">🚪 Cerrar Sesión</a>
-          </div>
-        </div>
-      </div>
-      <h1 class="title">CAFETERIA UTHH</h1>
-      <div class="topbar__right"></div>
-    </header>
+    <?php include 'barra_navegacion.php'; ?>
 
-    <!-- NAV -->
-   <nav class="nav">
-      <div class="nav__wrap">
-        <a class="pill" href="../archivosPHP/index.php"><span class="ico">🏠</span> HOME</a>
-        <a class="pill is-active" href="productos.php"><span class="ico">📦</span> PRODUCTOS</a>
-        <a class="pill" href="menu.php"><span class="ico">🍽️</span> MENÚ</a>
-        <a class="pill" href="pedidos.php"><span class="ico">🧾</span> PEDIDOS</a>
-        <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
-          <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
-          <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
-        <?php } ?>
-      </div>
-    </nav>
-
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="content">
-      <h2 class="section-title">Productos</h2>
-      <p style="text-align: center; margin-bottom: 20px; color: #666;">Haz clic en la imagen de un producto para ver más detalles.</p>
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p style="text-align: center; margin-bottom: 20px; color: #666;">Haz clic en la imagen para ver detalles.</p>
 
       <div class="products-grid">
 
         <?php
         if ($resultado_productos && $resultado_productos->num_rows > 0) {
           while ($fila = $resultado_productos->fetch_assoc()) {
-            // Preparamos los datos para pasarlos a JavaScript
+            // Preparamos los datos para pasarlos a JavaScript (Modal)
             $nombre = addslashes($fila['vchNombre']);
             $desc = addslashes($fila['vchDescripcion']);
             $precio = $fila['decPrecioVenta'];
@@ -85,14 +55,15 @@ $resultado_productos = $conn->query($sql);
 
             // Lógica de imagen
             $imgDb = $fila['vchImagen'];
+            // Ajuste de ruta: Estamos en archivosPHP, así que subimos un nivel con ../
             if (!empty($imgDb) && file_exists("../" . $imgDb)) {
               $imgUrl = "../" . $imgDb;
             } else {
+              // Placeholder si no hay imagen
               $imgUrl = "https://placehold.co/600x400/d9cfa8/765433?text=" . urlencode($fila['vchNombre']);
             }
         ?>
 
-            <!-- PRODUCTO INDIVIDUAL -->
             <article class="product">
               <div class="product__img" onclick="abrirModal('<?php echo $nombre; ?>', '<?php echo $desc; ?>', '<?php echo $precio; ?>', '<?php echo $stock; ?>', '<?php echo $imgUrl; ?>')">
                 <img src="<?php echo $imgUrl; ?>" alt="<?php echo htmlspecialchars($fila['vchNombre']); ?>">
@@ -100,7 +71,9 @@ $resultado_productos = $conn->query($sql);
 
               <ul class="product__text">
                 <li><strong><?php echo htmlspecialchars($fila['vchNombre']); ?></strong></li>
-                <li><?php echo htmlspecialchars($fila['vchDescripcion']); ?></li>
+
+                <li><?php echo htmlspecialchars(substr($fila['vchDescripcion'], 0, 50)) . '...'; ?></li>
+
                 <li class="price">$<?php echo number_format($fila['decPrecioVenta'], 2); ?> MXN</li>
               </ul>
             </article>
@@ -108,61 +81,25 @@ $resultado_productos = $conn->query($sql);
         <?php
           }
         } else {
-          echo "<p>No hay productos disponibles en este momento.</p>";
+          echo "<p style='text-align:center; width:100%;'>No hay productos disponibles en este momento.</p>";
         }
         ?>
 
-      </div> <!-- .products-grid -->
+      </div>
     </main>
   </div>
 
-  <footer class="footer">
-    <p>Universidad Tecnológica de la Huasteca Hidalguense</p>
-    <p>&copy; 2025 Cafetería UTHH. Todos los derechos reservados.</p>
+  <?php include "footer.php"; ?>
 
-    <div class="footer-links">
-      <a href="/unicafe/archivosPHP/aviso_privacidad.php">Aviso de Privacidad</a>
-      <span class="separator">|</span>
-      <a href="/archivosPHP/terminos.php">Terminos y condiciones</a>
-      <span class="separator">|</span>
-      <a href="/unicafe/archivosHTML/somosUnicafe.html">Sobre nosotros</a>
-    </div>
-  </footer>
-  <button
-    id="btn-voz"
-    class="voice-btn"
-    aria-label="Escuchar el contenido de la página">
-    🔊 Escuchar Contenido
-  </button>
-  <script src="/archivosJS/lector_voz.js"></script>
-
-  <script src="/archivosJS/accesibilidad.js"></script>
-
-  <div class="accessibility-panel">
-    <button id="btn-zoom-in" aria-label="Aumentar tamaño">A+</button>
-    <button id="btn-zoom-reset" aria-label="Restablecer tamaño">↺</button>
-    <button id="btn-zoom-out" aria-label="Disminuir tamaño">A-</button>
-
-    <button
-      id="btn-contrast"
-      aria-label="Cambiar modo de color"
-      style="margin-top: 5px; border-color: #2a9d8f; color: #2a9d8f">
-      🌗
-    </button>
-  </div>
-
-  <!-- ESTRUCTURA DE LA VENTANA MODAL (Oculta por defecto) -->
   <div id="productModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="cerrarModal()">&times;</span>
 
       <div class="modal-body">
-        <!-- Imagen Grande -->
         <div class="modal-img-container">
           <img id="modalImg" src="" alt="Producto">
         </div>
 
-        <!-- Información -->
         <div class="modal-info">
           <h2 id="modalTitle" class="modal-title">Nombre del Producto</h2>
           <p id="modalStock" class="modal-stock">Stock disponible: 0</p>
@@ -173,7 +110,6 @@ $resultado_productos = $conn->query($sql);
     </div>
   </div>
 
-  <!-- SCRIPT -->
   <script>
     function abrirModal(nombre, descripcion, precio, stock, imgUrl) {
       var modal = document.getElementById("productModal");
@@ -207,3 +143,4 @@ $resultado_productos = $conn->query($sql);
 if (isset($conn) && $conn instanceof mysqli) {
   $conn->close();
 }
+?>

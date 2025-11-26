@@ -78,43 +78,15 @@ $resultado_lista = $conn->query($sql_select);
   <!-- Estás en /unicafe/archivosPHP/  → sube un nivel para llegar a /unicafe/archivosCSS/ -->
   <link rel="stylesheet" href="../archivosCSS/registro.css">
   <link rel="stylesheet" href="../archivosCSS/usuarios.css">
-  <link rel="stylesheet" href="../archivosCSS/footer.css" />
-  <link rel="stylesheet" href="../archivosCSS/menu_desplegable.css" />
+  <link rel="stylesheet" href="../archivosCSS/layout.css?v=999.1" />
+
 </head>
 
 <body>
   <div class="app">
-    <header class="topbar">
-      <div class="topbar__left">
-        <span class="avatar" aria-hidden="true">👤</span>
+    <?php include 'header.php'; ?>
 
-        <div class="user-dropdown">
-          <span class="user-trigger">
-            Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?> <span style="font-size:0.8em">▼</span>
-          </span>
-          <div class="dropdown-content">
-            <a href="mi_cuenta.php">⚙️ Mi Cuenta</a>
-            <a href="logout.php" class="logout-link">🚪 Cerrar Sesión</a>
-          </div>
-        </div>
-      </div>
-      <h1 class="title">CAFETERIA UTHH</h1>
-      <div class="topbar__right"></div>
-    </header>
-    <nav class="nav">
-      <div class="nav__wrap">
-        <!-- Desde /archivosPHP/ para ir a /archivosHTML/ usa ../ -->
-        <a class="pill" href="/archivosPHP/index.php"><span class="ico">🏠</span> HOME</a>
-        <a class="pill" href="productos.php"><span class="ico">📦</span> PRODUCTOS</a>
-        <a class="pill" href="menu.php"><span class="ico">🍽️</span> MENÚ</a>
-        <a class="pill" href="pedidos.php"><span class="ico">🧾</span> PEDIDOS</a>
-        <!-- Esta página -->
-        <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
-          <a class="pill" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
-          <a class="pill is-active" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
-        <?php } ?>
-      </div>
-    </nav>
+    <?php include 'barra_navegacion.php'; ?>
 
     <main class="content">
       <!-- CONTENEDOR 1: FORMULARIO -->

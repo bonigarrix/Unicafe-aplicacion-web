@@ -72,11 +72,10 @@ $res_lista = $conn->query($sql_lista);
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gestión de Productos — Cafetería UTHH</title>
+    <link rel="stylesheet" href="../archivosCSS/layout.css?v=999.1">
     <link rel="stylesheet" href="../archivosCSS/registro.css">
-    <link rel="stylesheet" href="../archivosCSS/menu_desplegable.css" />
     <link rel="stylesheet" href="../archivosCSS/gestion_productos.css">
-    <link rel="stylesheet" href="../archivosCSS/footer.css" />
+
     <style>
         /* --- ESTILO NUEVO PARA EL BOTÓN DE VISTA PREVIA --- */
         .header-flex {
@@ -121,40 +120,11 @@ $res_lista = $conn->query($sql_lista);
 
 <body>
     <div class="app">
-        <header class="topbar">
-            <div class="topbar__left">
-                <span class="avatar" aria-hidden="true">👤</span>
 
-                <div class="user-dropdown">
-                    <span class="user-trigger">
-                        Hola, <?php echo htmlspecialchars($_SESSION['usuario']); ?> <span style="font-size:0.8em">▼</span>
-                    </span>
-                    <div class="dropdown-content">
-                        <a href="mi_cuenta.php">⚙️ Mi Cuenta</a>
-                        <a href="logout.php" class="logout-link">🚪 Cerrar Sesión</a>
-                    </div>
-                </div>
-            </div>
-            <h1 class="title">CAFETERIA UTHH</h1>
-            <div class="topbar__right"></div>
-        </header>
+        <?php include 'header.php'; ?>
 
-        <nav class="nav">
-            <div class="nav__wrap">
-                <a class="pill" href="../archivosPHP/index.php">HOME <span class="ico">🏠</span></a>
-                <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 3) { ?>
-                    <a class="pill" href="productos.php">PRODUCTOS <span class="ico">📦</span></a>
-                    <a class="pill" href="menu.php">MENÚ <span class="ico">🍽️</span></a>
-                    <a class="pill" href="pedidos.php">PEDIDOS <span class="ico">🧾</span></a>
-                <?php } ?>
-                <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1) { ?>
-                    <a class="pill is-active" href="gestion_productos.php">⚙️ GESTIÓN PROD.</a>
-                    <a class="pill" href="gestion_terminos.php">⚙️ GESTIÓN TÉRMINOS</a>
-                    <a class="pill" href="editar_aviso.php">⚙️ GESTIÓN AVISO DE PRIVACIDAD</a>
-                    <a class="pill" href="usuarios.php">REGISTROS <span class="ico">👤</span></a>
-                <?php } ?>
-            </div>
-        </nav>
+        <?php include 'barra_navegacion.php'; ?>
+
 
         <main class="content">
 
