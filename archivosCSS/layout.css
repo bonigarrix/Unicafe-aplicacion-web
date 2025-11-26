@@ -1,0 +1,510 @@
+/* ------- ESTRUCTURA DEL HOME --------- */
+:root{
+  --brown-a:#8a633b;
+  --brown-b:#765433;
+  --cream:#efe3cf;
+  --panel-br:#bfa88a;
+  --text:#1f1f1f;
+  --accent:#2A9D8F;
+  --accent-hover:#2A9D8F;
+}
+
+/* ------- BASE --------- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+  color:var(--text);
+  background:var(--cream);
+}
+
+/* --- 3. BARRA SUPERIOR (TOPBAR) - VERSIÓN FINAL --- */
+/* --- 3. BARRA SUPERIOR (TOPBAR) - CORREGIDO --- */
+.topbar {
+    /* 1. POSICIÓN RELATIVA: Necesaria para el centrado */
+    position: relative;
+    
+    /* 2. EJE Z: Esto asegura que la barra (y su menú) floten ENCIMA de la navegación */
+    z-index: 1000; 
+    
+    /* 3. COLORES */
+    background: linear-gradient(180deg, #8a633b, #765433);
+    background-color: #765433;
+    color: #ffffff;
+    
+    /* 4. DISTRIBUCIÓN */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    height: 70px;
+
+    /* 5. ELIMINADO: overflow: hidden;  <-- ESTO ERA EL PROBLEMA */
+    /* Al quitarlo, permitimos que el menú se dibuje fuera de la barra */
+}
+
+/* EL TÍTULO (Centrado Perfecto) */
+.title {
+    /* Despegamos el título del flujo normal */
+    position: absolute;
+    
+    /* Coordenadas exactas al centro */
+    left: 50%;
+    top: 50%;
+    
+    /* Corrección matemática para centrarlo sobre su propio eje */
+    transform: translate(-50%, -50%);
+    
+    /* Estilos de texto */
+    font-size: 28px; /* Un poco más pequeño para que quepa */
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap; /* Prohibido saltar de línea */
+    z-index: 1;
+    width: auto;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* BOTÓN DE USUARIO (Izquierda) */
+.topbar__left {
+    position: relative;
+    z-index: 10; /* Debe ser mayor que el título */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%; /* Ocupa toda la altura */
+}
+
+/* ELEMENTO FANTASMA (Derecha) */
+.topbar__right {
+    width: 50px; /* Mismo ancho aprox que el botón de usuario */
+    height: 1px;
+    visibility: hidden;
+}
+
+/* --- MÓVIL --- */
+@media (max-width: 700px) {
+    .topbar {
+        height: auto;
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .title {
+        position: static; /* Quitamos absoluto */
+        transform: none;
+        font-size: 22px;
+        order: 2; /* Pone el título debajo del usuario si quieres */
+    }
+    .topbar__left {
+        width: 100%;
+        justify-content: center;
+        order: 1;
+    }
+    .topbar__right { display: none; }
+}
+
+
+/* ------- NAV --------- */
+.nav{
+  background:#d9cfa8;
+  display:flex;
+  justify-content:center;
+  padding:10px 14;
+}
+.nav__wrap {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 10px 14px;
+  flex-wrap: wrap;
+}
+.pill{
+  background:#fff;
+  border-radius:20px;
+  padding:6px 14px;
+  text-decoration:none;
+  color:#3a3a3a;
+  font-weight:600;
+  transition:background .2s ease,transform .15s ease;
+}
+.pill:hover{
+  background:#f3f3f3;
+  transform:translateY(-2px);
+}
+.pill.is-active{
+  background:var(--accent);
+  color:#000000;
+}
+
+/* ------- CONTENIDO --------- */
+.content{
+  padding:10px 40px;
+}
+.container{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+}
+.section-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+/* ------- MENÚ AJUSTADO --------- */
+.menu-card {
+  background: #fff;
+  border: 2px solid var(--panel-br);
+  border-radius: 4px;
+  padding: 18px; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px; 
+  align-items: start;
+  justify-items: center; 
+}
+
+.mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  height: auto; 
+}
+
+.mini__img {
+  width: 120px; 
+  height: 80px;
+  border: 1px solid #cfcfcf;
+  background: #e2e2e2;
+  border-radius: 6px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.mini__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mini__lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 120px; 
+}
+
+.mini__lines li {
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 3px 0;
+}
+
+.mini__lines li:last-child {
+  border-bottom: none;
+}
+
+
+/* ------- ESPECIALES --------- */
+.specials-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+.special{
+  background:#fff;
+  border:2px solid var(--panel-br);
+  border-radius:4px;
+  padding:12px;
+  text-align:center;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+.special__img{
+  height:180px;
+  border:1px solid #d6d6d6;
+  background:#e5e5e5;
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.special__img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.special__lines{
+  list-style:none;
+  margin:0;
+  padding:0 8px;
+}
+.special__lines li{
+  font-size:14px;
+  padding:8px 0 6px;
+  text-align:center;
+}
+/* ------- BOTÓN INICIAR SESIÓN --------- */
+.topbar__left{
+  display:flex;
+  align-items:center;
+  gap:8px;                 
+}
+
+/* Avatar redondo */
+.avatar{
+  width:34px; height:34px;
+  border-radius:50%;
+  background:#eee;
+  color:#5a3c7a;           
+  display:grid; place-items:center;
+  font-size:18px;
+  border:2px solid rgba(0,0,0,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+/* Pastilla blanca subrayada */
+.login-pill{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 12px;
+  background:#fff;
+  border-radius:10px;
+  color:#1f1f1f;
+  font-weight:800;
+  text-decoration:underline;       
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow: 0 2px 0 rgba(0,0,0,.10),
+              inset 0 1px 0 rgba(255,255,255,.9);
+  transition: transform .12s ease, background .2s ease, box-shadow .2s ease;
+}
+
+/* Interacciones */
+.login-pill:hover{
+  background:#f7f7f7;
+  transform:translateY(-1px);
+}
+.login-pill:active{
+  transform:translateY(0);
+}
+.login-pill:focus{
+  outline:none;
+  box-shadow:0 0 0 3px rgba(42,157,143,.25), 0 2px 0 rgba(0,0,0,.10);
+  border-color:#79c3a3;
+}
+
+
+/* ------- RESPONSIVO ---------*/
+@media (max-width:980px){
+  .specials-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:680px){
+  .container{display:block;}
+  .menu-grid{grid-template-columns:1fr 1fr;}
+  .specials-grid{grid-template-columns:1fr;}
+  .title{font-size:26px;}
+}
+/* -------- FOOTER ------- */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main.content {
+  flex: 1;
+}
+
+footer {
+  background-color: #765433;
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 16px;
+
+  line-height: 1.4;
+
+  padding: 40px 20px;
+
+  margin-top: auto;
+}
+
+.footer-links {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #efe3cf;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.separator {
+  color: #a88b7d;
+  font-weight: lighter;
+}
+/* --- ARREGLO DEL MENÚ DESPLEGABLE --- */
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-trigger {
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 9999;
+  text-align: left;
+}
+
+.dropdown-content a {
+  color: #333 !important;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+  color: #765433 !important;
+}
+
+.user-dropdown:hover .dropdown-content {
+  display: block;
+}
+/* Botón flotante para leer voz */
+.voice-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
+    background-color: #2A9D8F; 
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 10000; 
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.voice-btn:hover {
+    transform: scale(1.05);
+    background-color: #21867a;
+}
+
+.voice-btn.hablando {
+    background-color: #e76f51; 
+}
+/* --- PANEL DE ZOOM (LUPA) --- */
+.accessibility-panel {
+    position: fixed;
+    bottom: 80px; 
+    right: 20px;
+    display: flex;
+    flex-direction: column; 
+    gap: 5px;
+    z-index: 10000;
+}
+
+.accessibility-panel button {
+    background-color: #fff;
+    color: #765433; 
+    border: 2px solid #765433;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; 
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.accessibility-panel button:hover {
+    background-color: #765433;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+
+.voice-btn {
+    
+    z-index: 10001; 
+}
+/* --- MODOS DE DALTONISMO / ACCESIBILIDAD --- */
+
+/* Modo 1: Escala de Grises (Ayuda a eliminar confusión de colores) */
+body.modo-grises {
+    filter: grayscale(100%);
+}
+
+/* Modo 2: Alto Contraste (Ayuda a baja visión) */
+body.modo-contraste {
+    filter: contrast(150%) brightness(110%);
+    background-color: #fff !important; /* Fuerza fondo blanco para lectura */
+}
+
+/*---- Invertir colores inteligente ------*/
+
+body.modo-oscuro-acc {
+    filter: invert(100%) hue-rotate(180deg);
+}
+
+body.modo-oscuro-acc img {
+    filter: invert(100%) hue-rotate(180deg);
+}

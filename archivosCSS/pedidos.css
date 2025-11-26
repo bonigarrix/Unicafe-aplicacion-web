@@ -1,124 +1,4 @@
-/* --- VARIABLES DE COLOR EXACTAS --- */
-:root {
-    --color-header: #765433;       /* Marrón Café exacto */
-    --color-navbar: #d4ccab;       /* Beige verdoso/tierra de la barra */
-    --color-bg: #efe3cf;           /* Beige crema exacto del fondo */
-    --color-teal: #2A9D8F;         /* Verde Agua (Botones activos) */
-    --text-dark: #4A3B32;
-}
 
-/* Reset */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--color-bg);
-    margin: 0;
-    color: #333;
-}
-
-/* Wrapper para mantener el footer abajo */
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* --- TOPBAR --- */
-.topbar {
-    background-color: var(--color-header);
-    color: white;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-}
-
-.topbar__left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 200px;
-}
-
-.avatar {
-    background-color: rgba(255,255,255,0.25);
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    font-size: 18px;
-    color: white;
-}
-
-/* Dropdown de usuario */
-.user-trigger {
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.title {
-    font-size: 28px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0;
-    text-align: center;
-    flex-grow: 1;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
-
-.topbar > div:last-child { width: 200px; }
-
-/* --- NAVEGACIÓN --- */
-.nav {
-    background-color: var(--color-navbar);
-    padding: 15px 0;
-    display: flex;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-.nav__wrap {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.pill {
-    text-decoration: none;
-    color: #5D4037;
-    background-color: white;
-    padding: 10px 25px;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-}
-
-.pill:hover:not(.is-active) {
-    background-color: #fffdf5;
-    transform: translateY(-2px);
-}
-
-.pill.is-active {
-    background-color: var(--color-teal);
-    color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.ico { font-size: 16px; }
 
 /* --- CONTENIDO PRINCIPAL (Aquí está la clave del diseño) --- */
 .main-container {
@@ -181,13 +61,13 @@ td {
 
 /* Botón Eliminar */
 .btn-delete {
-    background-color: var(--color-red);
+    background-color: red;
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    text-decoration: none; /* Importante si es un link <a> */
+    text-decoration: none;
     font-weight: bold;
     font-size: 12px;
     display: inline-block;
